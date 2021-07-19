@@ -13,6 +13,7 @@ struct node
 	std::shared_ptr<node<T>> pRight;
 
 	node(T data, std::shared_ptr<node<T>>& pLeft, std::shared_ptr<node<T>>& pRight);
+	node();
 };
 
 template<class T>

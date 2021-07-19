@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\Lessons\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\Data Structures and Algorithms.csproj": {}
+    "D:\\GitHub\\projects\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\Data Structures and Algorithms.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\Lessons\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\Data Structures and Algorithms.csproj": {
+    "D:\\GitHub\\projects\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\Data Structures and Algorithms.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\Lessons\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\Data Structures and Algorithms.csproj",
+        "projectUniqueName": "D:\\GitHub\\projects\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\Data Structures and Algorithms.csproj",
         "projectName": "Data Structures and Algorithms",
-        "projectPath": "D:\\GitHub\\Lessons\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\Data Structures and Algorithms.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\Lessons\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\obj\\",
+        "projectPath": "D:\\GitHub\\projects\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\Data Structures and Algorithms.csproj",
+        "packagesPath": "C:\\Users\\Laptop\\.nuget\\packages\\",
+        "outputPath": "D:\\GitHub\\projects\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Laptop\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,18 +55,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[5.0.2, 5.0.2]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-preview.1.21103.13\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

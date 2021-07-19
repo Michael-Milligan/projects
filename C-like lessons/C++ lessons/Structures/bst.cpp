@@ -10,6 +10,12 @@ node<T>::node(T data, std::shared_ptr<node<T>>& pLeft, std::shared_ptr<node<T>>&
 }
 
 template<class T>
+node<T>::node()
+{
+
+}
+
+template<class T>
 bst<T>::bst()
 {
 	root = nullptr;
@@ -45,17 +51,19 @@ void bst<T>::add(T data)
 		T current_data = (*current).data;
 		if (data < current_data)
 		{
-			parent = current.get();
+			parent = std::make_shared<node<T>>(current.get());
 			current = std::make_shared<node<T>>((*current).pLeft.get());
 		}
 		else if (data > current_data)
 		{
-			parent = current.get();
+			parent = std::make_shared<node<T>>(current.get());
 			current = std::make_shared<node<T>>((*current).pRight.get());
 		}
 		else throw std::exception("Tree already has element with such data\n");
 	}
-	node<T> current_node =  node<T>(data, std::make_shared<node<T>>(nullptr), std::make_shared<node<T>>(nullptr));
+	ptr<T> pLeft = std::make_shared<node<T>>(nullptr);
+	ptr<T> pRight = std::make_shared<node<T>>(nullptr);
+	//node<T> current_node(data, pLeft, pRight);
 	
 }
 

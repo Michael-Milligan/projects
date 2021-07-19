@@ -15,24 +15,9 @@ namespace Data_Structures_and_Algorithms
 {
     public class Program
     {
-        static Stopwatch clock = new Stopwatch();
         public static void Main()
         {
 
-            Person I = new Person(19, new string[] { "Michel", "Raumond", "Faubert" });
-            var (age, names) = I;
         }
-    }
-
-    public  record Person(int Age, string[] Names);
-
-    public class BenchmarkClass
-    {
-
-    }
-
-    public static class Extensions
-    {
-        
     }
 }
