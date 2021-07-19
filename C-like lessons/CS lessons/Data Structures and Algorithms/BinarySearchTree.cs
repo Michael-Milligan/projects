@@ -8,7 +8,12 @@ namespace Data_Structures_and_Algorithms
 {
     class BinarySearchTree<T>
     {
-        Node<T> Root;q = new 
+        public Node<T> Root = new Node<T>();
+
+        public void Add(T Data)
+        {
+
+        }
     }
 
     class Node<T>
@@ -22,6 +27,12 @@ namespace Data_Structures_and_Algorithms
             this.Data = Data;
             this.pLeft = pLeft;
             this.pRight = pRight;
+        }
+        public Node()
+        {
+            Data = default;
+            pLeft = null;
+            pRight = null;
         }
     }
 }
