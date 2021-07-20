@@ -8,11 +8,42 @@ namespace Data_Structures_and_Algorithms
 {
     class BinarySearchTree<T>
     {
-        public Node<T> Root = new Node<T>();
+        public Node<T> Root = null;
+        public IComparer<T> Comparer;
 
         public void Add(T Data)
         {
+            if (Root == null)
+            {
+                Root = new Node<T>(Data);
+                return;
+            }
 
+            Node<T> Current = Root;
+            Node<T> Previous = Root;
+
+            while (Current != null)
+            {
+                if (Comparer.Compare(Data, Current.Data) > 0)
+                {
+                    Previous = Current;
+                    Current = Current.pLeft;
+                }
+                else if (Comparer.Compare(Data, Current.Data) < 0)
+                {
+                    Previous = Current;
+                    Current = Current.pRight;
+                }
+                else throw new Exception("Tree contains already element with such a data");
+            }
+            Current = new Node<T>(Data);
+            if (Comparer.Compare(Current.Data, Previous.Data) > 0) Previous.pLeft = Current;
+            else Previous.pRight = Current;
+        }
+
+        public BinarySearchTree(IComparer<T> comparer)
+        {
+            Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
         }
     }
 
@@ -28,9 +59,9 @@ namespace Data_Structures_and_Algorithms
             this.pLeft = pLeft;
             this.pRight = pRight;
         }
-        public Node()
+        public Node(T Data)
         {
-            Data = default;
+            this.Data = Data;
             pLeft = null;
             pRight = null;
         }
