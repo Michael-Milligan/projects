@@ -11,6 +11,8 @@ namespace Data_Structures_and_Algorithms
         public Node<T> Root = null;
         public IComparer<T> Comparer;
 
+        public Delegate
+
         public void Add(T Data)
         {
             if (Root == null)
@@ -39,6 +41,30 @@ namespace Data_Structures_and_Algorithms
             Current = new Node<T>(Data);
             if (Comparer.Compare(Current.Data, Previous.Data) > 0) Previous.pLeft = Current;
             else Previous.pRight = Current;
+        }
+
+        public Node<T> Search(T Data)
+        {
+            Node<T> Current = Root;
+
+            while (Current != null)
+            {
+                if (Comparer.Compare(Data, Current.Data) > 0)
+                {
+                    Current = Current.pLeft;
+                }
+                else if (Comparer.Compare(Data, Current.Data) < 0)
+                {
+                    Current = Current.pRight;
+                }
+                else return Current;
+            }
+            throw new Exception("Tree contains already element with such a data");
+        }
+
+        public void InorderTraversal(Node<T> Root, )
+        {
+
         }
 
         public BinarySearchTree(IComparer<T> comparer)

@@ -17,7 +17,7 @@ namespace Data_Structures_and_Algorithms
     {
         public static void Main()
         {
-            BinarySearchTree<int> tree = new BinarySearchTree<int>(new IntComparer());
+            BinarySearchTree<int> tree = new(new IntComparer());
             tree.Add(5);
             tree.Add(65);
         }
