@@ -27,6 +27,7 @@ namespace Data_Structures_and_Algorithms
             if (root == null)
             {
                 root = new Node<T>(Data);
+                root.level = 0;
                 ++count;
                 return;
             }
@@ -51,6 +52,7 @@ namespace Data_Structures_and_Algorithms
             current = new Node<T>(Data);
             if (comparer.Compare(current.data, previous.data) > 0) previous.pLeft = current;
             else previous.pRight = current;
+            current.level = previous.level + 1;
             ++count;
         }
 
@@ -103,7 +105,6 @@ namespace Data_Structures_and_Algorithms
         public Node<T> pLeft;
         public Node<T> pRight;
         public int level;
-        public int position;
 
         public Node(T data, ref Node<T> pLeft, ref Node<T> pRight)
         {
