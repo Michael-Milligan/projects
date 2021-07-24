@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,86 +9,111 @@ namespace Data_Structures_and_Algorithms
 {
     class BinarySearchTree<T>
     {
-        public Node<T> Root = null;
-        public IComparer<T> Comparer;
+        public BinarySearchTree(IComparer<T> comparer)
+        {
+            this.comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
+        }
 
-        public Delegate
+        public Node<T> root = null;
+        public int count = 0;
+        public List<int[]> levelItemsMap = new();
+        public IComparer<T> comparer;
+        private static int levelCount;
+
+        public delegate void Action<T>(T Data, Stream stream);
 
         public void Add(T Data)
         {
-            if (Root == null)
+            if (root == null)
             {
-                Root = new Node<T>(Data);
+                root = new Node<T>(Data);
+                ++count;
                 return;
             }
+            
+            Node<T> current = root;
+            Node<T> previous = root;
 
-            Node<T> Current = Root;
-            Node<T> Previous = Root;
-
-            while (Current != null)
+            while (current != null)
             {
-                if (Comparer.Compare(Data, Current.Data) > 0)
+                if (comparer.Compare(Data, current.data) > 0)
                 {
-                    Previous = Current;
-                    Current = Current.pLeft;
+                    previous = current;
+                    current = current.pLeft;
                 }
-                else if (Comparer.Compare(Data, Current.Data) < 0)
+                else if (comparer.Compare(Data, current.data) < 0)
                 {
-                    Previous = Current;
-                    Current = Current.pRight;
+                    previous = current;
+                    current = current.pRight;
                 }
                 else throw new Exception("Tree contains already element with such a data");
             }
-            Current = new Node<T>(Data);
-            if (Comparer.Compare(Current.Data, Previous.Data) > 0) Previous.pLeft = Current;
-            else Previous.pRight = Current;
+            current = new Node<T>(Data);
+            if (comparer.Compare(current.data, previous.data) > 0) previous.pLeft = current;
+            else previous.pRight = current;
+            ++count;
         }
 
-        public Node<T> Search(T Data)
+        public Node<T> Search(T data)
         {
-            Node<T> Current = Root;
+            Node<T> current = root;
 
-            while (Current != null)
+            while (current != null)
             {
-                if (Comparer.Compare(Data, Current.Data) > 0)
+                if (comparer.Compare(data, current.data) > 0)
                 {
-                    Current = Current.pLeft;
+                    current = current.pLeft;
                 }
-                else if (Comparer.Compare(Data, Current.Data) < 0)
+                else if (comparer.Compare(data, current.data) < 0)
                 {
-                    Current = Current.pRight;
+                    current = current.pRight;
                 }
-                else return Current;
+                else return current;
             }
             throw new Exception("Tree contains already element with such a data");
         }
 
-        public void InorderTraversal(Node<T> Root, )
+        public void PreorderTraversal(Node<T> root, Action<T> action, Stream outputStream)
         {
-
+            action(root.data, outputStream);
+            if (root.pLeft != null) PreorderTraversal(root.pLeft, action, outputStream);
+            if (root.pRight != null) PreorderTraversal(root.pRight, action, outputStream);
         }
 
-        public BinarySearchTree(IComparer<T> comparer)
+        public void PrintTree(Stream outputStream)
         {
-            Comparer = comparer ?? throw new ArgumentNullException(nameof(comparer));
+            object lockObject = new();
+            lock (lockObject)
+            {
+                levelCount = 0;
+                PreorderTraversal(root, new Action<T>(PrintNode), outputStream);
+                levelCount = 0;
+            }
+        }
+
+        public void PrintNode(T Data, Stream outputStream)
+        {
+
         }
     }
 
     class Node<T>
     {
-        public T Data;
+        public T data;
         public Node<T> pLeft;
         public Node<T> pRight;
+        public int level;
+        public int position;
 
-        public Node(T Data, ref Node<T> pLeft, ref Node<T> pRight)
+        public Node(T data, ref Node<T> pLeft, ref Node<T> pRight)
         {
-            this.Data = Data;
+            this.data = data;
             this.pLeft = pLeft;
             this.pRight = pRight;
         }
-        public Node(T Data)
+        public Node(T data)
         {
-            this.Data = Data;
+            this.data = data;
             pLeft = null;
             pRight = null;
         }

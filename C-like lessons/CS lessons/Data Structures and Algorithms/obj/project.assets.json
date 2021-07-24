@@ -313,6 +313,15 @@
           "lib/netstandard2.0/Perfolizer.dll": {}
         }
       },
+      "QuikGraph/2.3.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/QuikGraph.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/QuikGraph.dll": {}
+        }
+      },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
         "type": "package",
         "runtimeTargets": {
@@ -1875,6 +1884,29 @@
         "lib/netstandard2.0/Perfolizer.dll",
         "perfolizer.0.2.1.nupkg.sha512",
         "perfolizer.nuspec"
+      ]
+    },
+    "QuikGraph/2.3.0": {
+      "sha512": "Vhj33jEOi4xQlJHFOrhDf29MgYLYnPi4z6ywIVvPhe/nUkCihj3kynWI9PaK+HM29ati5rd1SUON5z2sslEsVw==",
+      "type": "package",
+      "path": "quikgraph/2.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "lib/net35/QuikGraph.dll",
+        "lib/net35/QuikGraph.xml",
+        "lib/net40/QuikGraph.dll",
+        "lib/net40/QuikGraph.xml",
+        "lib/net45/QuikGraph.dll",
+        "lib/net45/QuikGraph.xml",
+        "lib/netstandard1.3/QuikGraph.dll",
+        "lib/netstandard1.3/QuikGraph.xml",
+        "lib/netstandard2.0/QuikGraph.dll",
+        "lib/netstandard2.0/QuikGraph.xml",
+        "quikgraph.2.3.0.nupkg.sha512",
+        "quikgraph.nuspec",
+        "quikgraph_logo.png"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -5372,12 +5404,13 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "BenchmarkDotNet >= 0.12.1"
+      "BenchmarkDotNet >= 0.12.1",
+      "QuikGraph >= 2.3.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\User\\.nuget\\packages\\": {},
-    "D:\\SDK\\NuGetPackages": {}
+    "C:\\Users\\Laptop\\.nuget\\packages\\": {},
+    "D:\\VS\\SDK\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
@@ -5385,14 +5418,14 @@
       "projectUniqueName": "D:\\GitHub\\Lessons\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\Data Structures and Algorithms.csproj",
       "projectName": "Data Structures and Algorithms",
       "projectPath": "D:\\GitHub\\Lessons\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\Data Structures and Algorithms.csproj",
-      "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\Laptop\\.nuget\\packages\\",
       "outputPath": "D:\\GitHub\\Lessons\\C-like lessons\\CS lessons\\Data Structures and Algorithms\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\SDK\\NuGetPackages"
+        "D:\\VS\\SDK\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Laptop\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5422,6 +5455,10 @@
           "BenchmarkDotNet": {
             "target": "Package",
             "version": "[0.12.1, )"
+          },
+          "QuikGraph": {
+            "target": "Package",
+            "version": "[2.3.0, )"
           }
         },
         "imports": [
@@ -5434,12 +5471,18 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[5.0.7, 5.0.7]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-preview.6.21355.2\\RuntimeIdentifierGraph.json"
       }
     }
   }
