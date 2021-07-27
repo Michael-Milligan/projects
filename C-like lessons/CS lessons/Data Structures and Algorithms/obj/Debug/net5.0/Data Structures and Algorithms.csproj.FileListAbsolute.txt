@@ -129,4 +129,4 @@ D:\GitHub\Lessons\C-like lessons\CS lessons\Data Structures and Algorithms\bin\D
 D:\GitHub\Lessons\C-like lessons\CS lessons\Data Structures and Algorithms\bin\Debug\net5.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\GitHub\Lessons\C-like lessons\CS lessons\Data Structures and Algorithms\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\GitHub\Lessons\C-like lessons\CS lessons\Data Structures and Algorithms\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.0\System.Management.dll
-D:\GitHub\Lessons\C-like lessons\CS lessons\Data Structures and Algorithms\obj\Debug\net5.0\Data Structures and Algorithms.csproj.AssemblyReference.cache
+D:\GitHub\Lessons\C-like lessons\CS lessons\Data Structures and Algorithms\obj\Debug\net5.0\Data Structures and Algorithms.csprojAssemblyReference.cache

@@ -18,8 +18,19 @@ namespace Data_Structures_and_Algorithms
         public static void Main()
         {
             BinarySearchTree<int> tree = new(new IntComparer());
-            tree.Add(5);
-            tree.Add(65);
+            Random random = new();
+            for (int i = 0; i < 25; ++i)
+            {
+                try
+                {
+                    tree.Add(random.Next(0, 250));
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+            tree.PrintTree();
         }
     }
 
