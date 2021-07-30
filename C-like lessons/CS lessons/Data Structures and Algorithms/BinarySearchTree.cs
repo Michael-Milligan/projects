@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Data_Structures_and_Algorithms
 {
-    class BinarySearchTree<T>
+    public class BinarySearchTree<T>
     {
         public BinarySearchTree(IComparer<T> comparer)
         {
@@ -20,6 +20,11 @@ namespace Data_Structures_and_Algorithms
 
         public delegate void Action<T>(T Data, Stream stream);
 
+        /// <summary>
+        /// Adds non-existent element to the tree
+        /// </summary>
+        /// <param name="Data"></param>
+        /// <exception cref="System.ArgumentException">Thrown when element is already in tree.</exception>
         public void Add(T Data)
         {
             if (root == null)
@@ -38,19 +43,20 @@ namespace Data_Structures_and_Algorithms
                 if (comparer.Compare(Data, current.data) > 0)
                 {
                     previous = current;
-                    current = current.pLeft;
+                    current = current.left;
                 }
                 else if (comparer.Compare(Data, current.data) < 0)
                 {
                     previous = current;
-                    current = current.pRight;
+                    current = current.right;
                 }
-                else throw new Exception("Tree contains already element with such a data");
+                else throw new ArgumentException("Tree contains already element with such a data");
             }
             current = new Node<T>(Data);
-            if (comparer.Compare(current.data, previous.data) > 0) previous.pLeft = current;
-            else previous.pRight = current;
+            if (comparer.Compare(current.data, previous.data) > 0) previous.left = current;
+            else previous.right = current;
             current.level = previous.level + 1;
+            current.parent = previous;
             ++count;
         }
 
@@ -62,11 +68,11 @@ namespace Data_Structures_and_Algorithms
             {
                 if (comparer.Compare(data, current.data) > 0)
                 {
-                    current = current.pLeft;
+                    current = current.left;
                 }
                 else if (comparer.Compare(data, current.data) < 0)
                 {
-                    current = current.pRight;
+                    current = current.right;
                 }
                 else return current;
             }
@@ -76,8 +82,8 @@ namespace Data_Structures_and_Algorithms
         public void PreorderTraversal(Node<T> root, Action<T> action, Stream outputStream)
         {
             action(root.data, outputStream);
-            if (root.pLeft != null) PreorderTraversal(root.pLeft, action, outputStream);
-            if (root.pRight != null) PreorderTraversal(root.pRight, action, outputStream);
+            if (root.left != null) PreorderTraversal(root.left, action, outputStream);
+            if (root.right != null) PreorderTraversal(root.right, action, outputStream);
         }
 
         public void PrintTree()
@@ -99,21 +105,22 @@ namespace Data_Structures_and_Algorithms
     public class Node<T>
     {
         public T data;
-        public Node<T> pLeft;
-        public Node<T> pRight;
+        public Node<T> left;
+        public Node<T> right;
+        public Node<T> parent;
         public int level;
 
         public Node(T data, ref Node<T> pLeft, ref Node<T> pRight)
         {
             this.data = data;
-            this.pLeft = pLeft;
-            this.pRight = pRight;
+            this.left = pLeft;
+            this.right = pRight;
         }
         public Node(T data)
         {
             this.data = data;
-            pLeft = null;
-            pRight = null;
+            left = null;
+            right = null;
         }
     }
 
@@ -129,7 +136,7 @@ namespace Data_Structures_and_Algorithms
             public NodeInfo<T> Parent, Left, Right;
         }
 
-        public static void Print<T>(this Node<T> root, string textFormat = "0", int spacing = 1, int topMargin = 2, int leftMargin = 2)
+        public static void Print<T>(this Node<T> root, int spacing = 1, int topMargin = 2, int leftMargin = 2)
         {
             if (root == null) return;
             int rootTop = Console.CursorTop + topMargin;
@@ -151,7 +158,7 @@ namespace Data_Structures_and_Algorithms
                 if (level > 0)
                 {
                     item.Parent = last[level - 1];
-                    if (next == item.Parent.Node.pLeft)
+                    if (next == item.Parent.Node.left)
                     {
                         item.Parent.Left = item;
                         item.EndPos = Math.Max(item.EndPos, item.Parent.StartPos - 1);
@@ -162,7 +169,7 @@ namespace Data_Structures_and_Algorithms
                         item.StartPos = Math.Max(item.StartPos, item.Parent.EndPos + 1);
                     }
                 }
-                next = next.pLeft ?? next.pRight;
+                next = next.left ?? next.right;
                 for (; next == null; item = item.Parent)
                 {
                     int top = rootTop + 2 * level;
@@ -181,7 +188,7 @@ namespace Data_Structures_and_Algorithms
                     if (item == item.Parent.Left)
                     {
                         item.Parent.StartPos = item.EndPos + 1;
-                        next = item.Parent.Node.pRight;
+                        next = item.Parent.Node.right;
                     }
                     else
                     {
@@ -200,6 +207,30 @@ namespace Data_Structures_and_Algorithms
             Console.SetCursorPosition(left, top);
             if (right < 0) right = left + s.Length;
             while (Console.CursorLeft < right) Console.Write(s);
+        }
+    }
+
+    public static class BinaryTreePrinter<T>
+    {
+        class NodeInfo<T>
+        {
+            public Node<T> node;
+            public int displayLevel { get { return node.level * 2 + 1; } }
+            public int startPosition;
+            public string Text { get { return node.data.ToString(); } }
+            public int EndPosition { get { return startPosition + Text.Length; } }
+        }
+
+        static void PrintNode(string data, int top, int left, int right)
+        {
+            if (right <= 0) right = left + data.Length;
+            Console.SetCursorPosition(left, top);
+            Console.Write(data);
+        }
+
+        public static void DisplayTree<T>(ref BinarySearchTree<T> tree, int spacing = 1, int topMargin = 2, int leftMargin = 2)
+        {
+            
         }
     }
 }
