@@ -85,21 +85,6 @@ namespace Data_Structures_and_Algorithms
             if (root.left != null) PreorderTraversal(root.left, action, outputStream);
             if (root.right != null) PreorderTraversal(root.right, action, outputStream);
         }
-
-        public void PrintTree()
-        {
-            //object lockObject = new();
-            //lock (lockObject)
-            //{
-            //    PreorderTraversal(root, new Action<T>(PrintNode), outputStream);
-            //}
-            root.Print<T>();
-        }
-
-        public void PrintNode(T Data, Stream outputStream)
-        {
-
-        }
     }
 
     public class Node<T>
@@ -129,7 +114,7 @@ namespace Data_Structures_and_Algorithms
         public class NodeInfo<T>
         {
             public Node<T> Node;
-            public string Text;
+            public string Text { get { return Node.data.ToString(); } }
             public int StartPos;
             public int Size { get { return Text.Length; } }
             public int EndPos { get { return StartPos + Size; } set { StartPos = value - Size; } }
@@ -142,9 +127,12 @@ namespace Data_Structures_and_Algorithms
             int rootTop = Console.CursorTop + topMargin;
             var last = new List<NodeInfo<T>>();
             var next = root;
+
+
+
             for (int level = 0; next != null; level++)
             {
-                var item = new NodeInfo<T> { Node = next, Text = next.data.ToString() };
+                var item = new NodeInfo<T> { Node = next};
                 if (level < last.Count)
                 {
                     item.StartPos = last[level].EndPos + spacing;
@@ -218,7 +206,8 @@ namespace Data_Structures_and_Algorithms
             public int displayLevel { get { return node.level * 2 + 1; } }
             public int startPosition;
             public string Text { get { return node.data.ToString(); } }
-            public int EndPosition { get { return startPosition + Text.Length; } }
+            public int endPosition { get { return startPosition + Text.Length; } set { startPosition = value - Text.Length; } }
+            public NodeInfo<T> parent, left, right;
         }
 
         static void PrintNode(string data, int top, int left, int right)
@@ -230,7 +219,52 @@ namespace Data_Structures_and_Algorithms
 
         public static void DisplayTree<T>(ref BinarySearchTree<T> tree, int spacing = 1, int topMargin = 2, int leftMargin = 2)
         {
-            
+            //null check
+            if (tree.root == null) return;
+
+            //initial and operational data
+            int topPosition = Console.CursorTop + topMargin;
+            Node<T> next = tree.root;
+            List<NodeInfo<T>> last = new();
+
+            //building infotree
+            for (int level = 0; next != null; ++level)
+            {
+                NodeInfo<T> item = new() { node = next };
+
+                //adding to last and assignment to startPosition
+                if (level < last.Count())
+                {
+                    item.startPosition = last[level].endPosition + spacing;
+                    last[level] = item;
+                }
+                else
+                {
+                    item.startPosition = leftMargin;
+                    last.Add(item);
+                }
+
+                //setting parent and limits for printing
+                if (level > 0)
+                {
+                    item.parent = last[level - 1];
+
+                    if (next == item.parent.node.left)
+                    {
+                        item.parent.left = item;
+                        item.endPosition = Math.Max(item.endPosition, item.parent.startPosition - 1);
+                    }
+                    else
+                    {
+                        item.parent.right = item;
+                        item.startPosition = Math.Max(item.startPosition, item.parent.endPosition + 1);
+                    }
+                }
+                next = next.left ?? next.right;
+
+                //for
+
+            }
         }
     }
 }
