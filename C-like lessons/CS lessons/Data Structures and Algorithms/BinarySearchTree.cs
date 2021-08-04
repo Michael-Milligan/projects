@@ -128,8 +128,6 @@ namespace Data_Structures_and_Algorithms
             var last = new List<NodeInfo<T>>();
             var next = root;
 
-
-
             for (int level = 0; next != null; level++)
             {
                 var item = new NodeInfo<T> { Node = next};
@@ -183,7 +181,9 @@ namespace Data_Structures_and_Algorithms
                         if (item.Parent.Left == null)
                             item.Parent.EndPos = item.StartPos - 1;
                         else
+                        {
                             item.Parent.StartPos += (item.StartPos - 1 - item.Parent.EndPos) / 2;
+                        }
                     }
                 }
             }
@@ -205,19 +205,19 @@ namespace Data_Structures_and_Algorithms
             public Node<T> node;
             public int displayLevel { get { return node.level * 2 + 1; } }
             public int startPosition;
-            public string Text { get { return node.data.ToString(); } }
-            public int endPosition { get { return startPosition + Text.Length; } set { startPosition = value - Text.Length; } }
+            public string text { get { return node.data.ToString(); } }
+            public int endPosition { get { return startPosition + text.Length; } set { startPosition = value - text.Length; } }
             public NodeInfo<T> parent, left, right;
         }
 
-        static void PrintNode(string data, int top, int left, int right)
+        static void PrintNode(string data, int top, int left, int right = -1)
         {
-            if (right <= 0) right = left + data.Length;
             Console.SetCursorPosition(left, top);
-            Console.Write(data);
+            if (right < 0) right = left + data.Length;
+            while (Console.CursorLeft < right) Console.Write(data);
         }
 
-        public static void DisplayTree<T>(ref BinarySearchTree<T> tree, int spacing = 1, int topMargin = 2, int leftMargin = 2)
+        public static void DisplayTree<T>(BinarySearchTree<T> tree, int spacing = 1, int topMargin = 2, int leftMargin = 2)
         {
             //null check
             if (tree.root == null) return;
@@ -262,9 +262,40 @@ namespace Data_Structures_and_Algorithms
                 }
                 next = next.left ?? next.right;
 
-                //for
+                for(;next == null; item = item.parent)
+                {
+                    int top = topMargin + level * 2;
+                    PrintNode(item.text, top, item.startPosition);
 
+                    if (item.left != null)
+                    {
+                        PrintNode("/", top + 1, item.left.endPosition);
+                        PrintNode("_", top, item.left.endPosition + 1, item.startPosition);
+                    }
+                    if (item.right != null)
+                    {
+                        PrintNode("_", top, item.endPosition, item.right.startPosition - 1);
+                        PrintNode("\\", top + 1, item.right.startPosition - 1);
+                    }
+                    if (--level < 0) break;
+                    if (item == item.parent.left)
+                    {
+                        item.parent.startPosition = item.endPosition + 1;
+                        next = item.parent.node.right;
+                    }
+                    else 
+                    {
+                        if (item.parent.left == null)   
+                            item.parent.endPosition = item.startPosition - 1;
+                        else
+                        {
+                            item.parent.startPosition += (item.startPosition - 1 - item.parent.endPosition) / 2;
+                        }
+
+                    }
+                }
             }
+            Console.SetCursorPosition(0, topMargin + last.Count * 2 - 1);
         }
     }
 }

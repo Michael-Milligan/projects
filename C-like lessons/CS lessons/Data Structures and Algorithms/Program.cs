@@ -19,7 +19,7 @@ namespace Data_Structures_and_Algorithms
         {
             BinarySearchTree<int> tree = new(new IntComparer());
             Random random = new();
-            for (int i = 0; i < 25; ++i)
+            for (int i = 0; i < 5; ++i)
             {
                 try
                 {
@@ -30,7 +30,8 @@ namespace Data_Structures_and_Algorithms
 
                 }
             }
-            tree.PrintTree();
+            BinaryTreePrinter<int>.DisplayTree(tree);
+            //tree.root.Print();
         }
     }
 
