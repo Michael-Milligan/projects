@@ -85,6 +85,43 @@ namespace Data_Structures_and_Algorithms
             if (root.left != null) PreorderTraversal(root.left, action, outputStream);
             if (root.right != null) PreorderTraversal(root.right, action, outputStream);
         }
+
+        public Node<T> GetNodeInorderPredecessor(T nodeData)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Node<T> GetNodeInorderSuccessor(T nodeData)
+        {
+            Node<T> node = Search(nodeData);
+            if (node.right != null) return GetMinValue(node.right);
+            else
+            {
+                while (node.parent != null && node.parent.left != node)
+                {
+                    node = node.parent;
+                }
+                return node.parent == null ? node : node.parent;
+            }
+        }
+
+        public Node<T> GetMinValue(Node<T> root)
+        {
+            Node<T> minValue = root;
+
+            GetMinValue(root,ref minValue);
+            return minValue;
+        }
+
+        public void GetMinValue(Node<T> root, ref Node<T> prevMin)
+        {
+            if (comparer.Compare(prevMin.data, root.data) > 0)
+            {
+                prevMin = root;
+            }
+            if (root.right != null) GetMinValue(root.right, ref prevMin);
+            if (root.left != null) GetMinValue(root.left, ref prevMin);
+        }
     }
 
     public class Node<T>
@@ -195,107 +232,6 @@ namespace Data_Structures_and_Algorithms
             Console.SetCursorPosition(left, top);
             if (right < 0) right = left + s.Length;
             while (Console.CursorLeft < right) Console.Write(s);
-        }
-    }
-
-    public static class BinaryTreePrinter<T>
-    {
-        class NodeInfo<T>
-        {
-            public Node<T> node;
-            public int displayLevel { get { return node.level * 2 + 1; } }
-            public int startPosition;
-            public string text { get { return node.data.ToString(); } }
-            public int endPosition { get { return startPosition + text.Length; } set { startPosition = value - text.Length; } }
-            public NodeInfo<T> parent, left, right;
-        }
-
-        static void PrintNode(string data, int top, int left, int right = -1)
-        {
-            Console.SetCursorPosition(left, top);
-            if (right < 0) right = left + data.Length;
-            while (Console.CursorLeft < right) Console.Write(data);
-        }
-
-        public static void DisplayTree<T>(BinarySearchTree<T> tree, int spacing = 1, int topMargin = 2, int leftMargin = 2)
-        {
-            //null check
-            if (tree.root == null) return;
-
-            //initial and operational data
-            int topPosition = Console.CursorTop + topMargin;
-            Node<T> next = tree.root;
-            List<NodeInfo<T>> last = new();
-
-            //building infotree
-            for (int level = 0; next != null; ++level)
-            {
-                NodeInfo<T> item = new() { node = next };
-
-                //adding to last and assignment to startPosition
-                if (level < last.Count())
-                {
-                    item.startPosition = last[level].endPosition + spacing;
-                    last[level] = item;
-                }
-                else
-                {
-                    item.startPosition = leftMargin;
-                    last.Add(item);
-                }
-
-                //setting parent and limits for printing
-                if (level > 0)
-                {
-                    item.parent = last[level - 1];
-
-                    if (next == item.parent.node.left)
-                    {
-                        item.parent.left = item;
-                        item.endPosition = Math.Max(item.endPosition, item.parent.startPosition - 1);
-                    }
-                    else
-                    {
-                        item.parent.right = item;
-                        item.startPosition = Math.Max(item.startPosition, item.parent.endPosition + 1);
-                    }
-                }
-                next = next.left ?? next.right;
-
-                for(;next == null; item = item.parent)
-                {
-                    int top = topMargin + level * 2;
-                    PrintNode(item.text, top, item.startPosition);
-
-                    if (item.left != null)
-                    {
-                        PrintNode("/", top + 1, item.left.endPosition);
-                        PrintNode("_", top, item.left.endPosition + 1, item.startPosition);
-                    }
-                    if (item.right != null)
-                    {
-                        PrintNode("_", top, item.endPosition, item.right.startPosition - 1);
-                        PrintNode("\\", top + 1, item.right.startPosition - 1);
-                    }
-                    if (--level < 0) break;
-                    if (item == item.parent.left)
-                    {
-                        item.parent.startPosition = item.endPosition + 1;
-                        next = item.parent.node.right;
-                    }
-                    else 
-                    {
-                        if (item.parent.left == null)   
-                            item.parent.endPosition = item.startPosition - 1;
-                        else
-                        {
-                            item.parent.startPosition += (item.startPosition - 1 - item.parent.endPosition) / 2;
-                        }
-
-                    }
-                }
-            }
-            Console.SetCursorPosition(0, topMargin + last.Count * 2 - 1);
         }
     }
 }

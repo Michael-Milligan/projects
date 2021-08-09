@@ -17,31 +17,8 @@ namespace Data_Structures_and_Algorithms
     {
         public static void Main()
         {
-            BinarySearchTree<int> tree = new(new IntComparer());
-            Random random = new();
-            for (int i = 0; i < 5; ++i)
-            {
-                try
-                {
-                    tree.Add(random.Next(0, 250));
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            BinaryTreePrinter<int>.DisplayTree(tree);
-            //tree.root.Print();
+            
         }
     }
 
-    public class IntComparer : IComparer<int>
-    {
-        public int Compare(int x, int y)
-        {
-            if (x > y) return 1;
-            else if (x == y) return 0;
-            else return -1;
-        }
-    }
 }
